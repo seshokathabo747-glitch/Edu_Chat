@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ST Calculator App – Thabo Seshoka</title>
+<meta name="description" content="ST Calculator App by Thabo Seshoka – Professional online calculator with HTML, CSS, and JavaScript. Calculate quickly and easily.">
+<meta name="keywords" content="Thabo Seshoka, Calculator, Online Calculator, JS Calculator, ST Calculator App, Professional Calculator">
+<meta name="author" content="Thabo Seshoka">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    header {
+        width: 100%;
+        background: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 26px;
+        font-weight: bold;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .calculator {
+        margin-top: 40px;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.3);
+        width: 320px;
+        max-width: 90%;
+        text-align: center;
+    }
+    h1 {
+        color: #4CAF50;
+        margin-bottom: 20px;
+    }
+    input {
+        width: 90%;
+        padding: 12px;
+        font-size: 18px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        text-align: right;
+    }
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+    button {
+        padding: 15px 0;
+        font-size: 18px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+    button:hover { opacity: 0.85; }
+    .number { background-color: #2ecc71; }
+    .operator { background-color: #f39c12; }
+    .operator:hover { background-color: #e67e22; }
+    .clear { background-color: #e74c3c; }
+    .clear:hover { background-color: #c0392b; }
+    button.zero { grid-column: span 2; }
+    footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #777;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+    @media (max-width: 400px){
+        .calculator { width: 95%; padding: 20px; }
+        input { font-size: 16px; padding: 10px; }
+        button { font-size: 16px; padding: 12px 0; }
+    }
+</style>
+</head>
+<body>
+
+<header>ST Calculator App</header>
+
+<div class="calculator">
+    <h1>Thabo Seshoka Calculator</h1>
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+        <button class="number" onclick="appendNumber('7')">7</button>
+        <button class="number" onclick="appendNumber('8')">8</button>
+        <button class="number" onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="appendOperator('/')">/</button>
+        <button class="number" onclick="appendNumber('4')">4</button>
+        <button class="number" onclick="appendNumber('5')">5</button>
+        <button class="number" onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="appendOperator('*')">*</button>
+        <button class="number" onclick="appendNumber('1')">1</button>
+        <button class="number" onclick="appendNumber('2')">2</button>
+        <button class="number" onclick="appendNumber('3')">3</button>
+        <button class="operator" onclick="appendOperator('-')">-</button>
+        <button class="number zero" onclick="appendNumber('0')">0</button>
+        <button class="number" onclick="appendNumber('.')">.</button>
+        <button class="operator" onclick="calculate()">=</button>
+        <button class="operator" onclick="appendOperator('+')">+</button>
+        <button class="clear" onclick="clearDisplay()">Clear</button>
+    </div>
+</div>
+
+<footer>© 2026 Thabo Seshoka – ST Calculator App</footer>
+
+<script>
+    const display = document.getElementById('display');
+    let currentInput = '';
+
+    function appendNumber(num) {
+        currentInput += num;
+        display.value = currentInput;
+    }
+
+    function appendOperator(op) {
+        if(currentInput === '') return;
+        currentInput += op;
+        display.value = currentInput;
+    }
+
+    function calculate() {
+        try {
+            display.value = eval(currentInput);
+            currentInput = display.value;
+        } catch {
+            display.value = 'Error';
+            currentInput = '';
+        }
+    }
+
+    function clearDisplay() {
+        currentInput = '';
+        display.value = '';
+    }
+</script>
+
+</body>
+</html>
