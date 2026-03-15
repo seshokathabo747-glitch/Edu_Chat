@@ -1,141 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thabo Seshoka - Calculator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+# Thabo Seshoka Calculator Website
 
-        .calculator {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            width: 300px;
-            text-align: center;
-        }
+This is a simple web-based calculator built with **HTML, CSS, and JavaScript**.  
 
-        .calculator h1 {
-            margin-bottom: 20px;
-            color: #4CAF50;
-        }
+## Features
+- Display your name at the top
+- Basic calculator operations: addition, subtraction, multiplication, division
+- Decimal numbers support
+- Clear button to reset the display
+- Interactive buttons with hover effects
 
-        #display {
-            width: 100%;
-            height: 50px;
-            margin-bottom: 20px;
-            text-align: right;
-            padding: 10px;
-            font-size: 24px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-        }
+## How to Use
+1. Open the `index.html` file in a web browser.
+2. Click the buttons to perform calculations.
+3. Use the "Clear" button to reset the calculator.
 
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .buttons button {
-            padding: 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            transition: 0.2s;
-        }
-
-        .buttons button:hover {
-            background-color: #45a049;
-        }
-
-        .buttons button.operator {
-            background-color: #f39c12;
-        }
-
-        .buttons button.operator:hover {
-            background-color: #e67e22;
-        }
-
-        .buttons button.clear {
-            background-color: #e74c3c;
-        }
-
-        .buttons button.clear:hover {
-            background-color: #c0392b;
-        }
-    </style>
-</head>
-<body>
-    <div class="calculator">
-        <h1>Thabo Seshoka Calculator</h1>
-        <input type="text" id="display" disabled>
-        <div class="buttons">
-            <button onclick="appendNumber('7')">7</button>
-            <button onclick="appendNumber('8')">8</button>
-            <button onclick="appendNumber('9')">9</button>
-            <button class="operator" onclick="appendOperator('/')">/</button>
-
-            <button onclick="appendNumber('4')">4</button>
-            <button onclick="appendNumber('5')">5</button>
-            <button onclick="appendNumber('6')">6</button>
-            <button class="operator" onclick="appendOperator('*')">*</button>
-
-            <button onclick="appendNumber('1')">1</button>
-            <button onclick="appendNumber('2')">2</button>
-            <button onclick="appendNumber('3')">3</button>
-            <button class="operator" onclick="appendOperator('-')">-</button>
-
-            <button onclick="appendNumber('0')">0</button>
-            <button onclick="appendNumber('.')">.</button>
-            <button class="operator" onclick="calculate()">=</button>
-            <button class="operator" onclick="appendOperator('+')">+</button>
-
-            <button class="clear" onclick="clearDisplay()" style="grid-column: span 4;">Clear</button>
-        </div>
-    </div>
-
-    <script>
-        let display = document.getElementById('display');
-        let currentInput = '';
-
-        function appendNumber(num) {
-            currentInput += num;
-            display.value = currentInput;
-        }
-
-        function appendOperator(op) {
-            if (currentInput === '') return;
-            currentInput += op;
-            display.value = currentInput;
-        }
-
-        function calculate() {
-            try {
-                display.value = eval(currentInput);
-                currentInput = display.value;
-            } catch {
-                display.value = 'Error';
-                currentInput = '';
-            }
-        }
-
-        function clearDisplay() {
-            currentInput = '';
-            display.value = '';
-        }
-    </script>
-</body>
-</html>
+## Live Demo
+Once published on GitHub Pages, your website will be available at:  
+`https://yourusername.github.io/repositoryname/`
