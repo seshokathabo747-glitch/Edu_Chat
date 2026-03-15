@@ -16,4 +16,4 @@ This is a simple web-based calculator built with **HTML, CSS, and JavaScript**.
 
 ## Live Demo
 Once published on GitHub Pages, your website will be available at:  
-`https://yourusername.github.io/repositoryname/`
+`https://Seshoka Thabo.github.io/calculator_website/`
