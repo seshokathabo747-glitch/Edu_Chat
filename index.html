@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ST Calculator App – Thabo Seshoka</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    header {
+        width: 100%;
+        background: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        font-size: 26px;
+        font-weight: bold;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .calculator, .game {
+        margin-top: 40px;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 25px rgba(0,0,0,0.3);
+        width: 320px;
+        max-width: 90%;
+        text-align: center;
+    }
+    h1, h2 {
+        color: #4CAF50;
+        margin-bottom: 20px;
+    }
+    input, select {
+        width: 90%;
+        padding: 12px;
+        font-size: 16-18px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        text-align: right;
+    }
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+    button {
+        padding: 15px 0;
+        font-size: 18px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+    button:hover { opacity: 0.85; }
+    button:active { transform: scale(0.9); }
+
+    .number { background: #2ecc71; }
+    .operator { background: #f39c12; }
+    .clear { background: #e74c3c; }
+
+    .zero { grid-column: span 2; }
+    .full { grid-column: span 4; }
+
+    #historyList {
+        text-align: left;
+        max-height: 150px;
+        overflow-y: auto;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background: #f9f9f9;
+        margin-top: 10px;
+    }
+
+    footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #777;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+
+<header>ST Calculator App</header>
+
+<div class="calculator">
+    <h1>Thabo Seshoka Calculator</h1>
+
+    <input type="text" id="display" disabled>
+
+    <h3>History</h3>
+    <ul id="historyList"></ul>
+
+    <div class="buttons">
+        <button class="clear" onclick="backspace()">⌫</button>
+        <button class="operator" onclick="squareRoot()">√</button>
+        <button class="operator" onclick="appendOperator('/')">/</button>
+        <button class="operator" onclick="appendOperator('*')">*</button>
+
+        <button class="number" onclick="appendNumber('7')">7</button>
+        <button class="number" onclick="appendNumber('8')">8</button>
+        <button class="number" onclick="appendNumber('9')">9</button>
+        <button class="operator" onclick="appendOperator('-')">-</button>
+
+        <button class="number" onclick="appendNumber('4')">4</button>
+        <button class="number" onclick="appendNumber('5')">5</button>
+        <button class="number" onclick="appendNumber('6')">6</button>
+        <button class="operator" onclick="appendOperator('+')">+</button>
+
+        <button class="number" onclick="appendNumber('1')">1</button>
+        <button class="number" onclick="appendNumber('2')">2</button>
+        <button class="number" onclick="appendNumber('3')">3</button>
+        <button class="operator" onclick="calculate()">=</button>
+
+        <button class="number zero" onclick="appendNumber('0')">0</button>
+        <button class="number" onclick="appendNumber('.')">.</button>
+        <button class="clear full" onclick="clearDisplay()">Clear</button>
+    </div>
+</div>
+
+<div class="game">
+    <h2>Math Game</h2>
+
+    <select id="operation">
+        <option value="+">Addition</option>
+        <option value="-">Subtraction</option>
+        <option value="*">Multiplication</option>
+        <option value="/">Division</option>
+        <option value="all">All Operations</option>
+    </select>
+
+    <select id="totalQuestions">
+        <option>25</option>
+        <option>50</option>
+        <option>75</option>
+        <option>100</option>
+    </select>
+
+    <button class="operator" onclick="startGame()">Start Game</button>
+
+    <h3 id="question"></h3>
+    <input type="number" id="answer">
+    <button class="operator" onclick="submitAnswer()">Submit Answer</button>
+    <p id="score"></p>
+</div>
+
+<footer>© 2026 Thabo Seshoka – ST Calculator App</footer>
+
+<script>
+    const display = document.getElementById("display");
+    let currentInput = "";
+    let history = [];
+
+    function appendNumber(num) {
+        currentInput += num;
+        display.value = currentInput;
+    }
+
+    function appendOperator(op) {
+        if (currentInput === "") return;
+        currentInput += op;
+        display.value = currentInput;
+    }
+
+    function calculate() {
+        try {
+            let result = Function('"use strict";return (' + currentInput + ')')();
+            display.value = result;
+
+            // Add to history
+            history.push(currentInput + " = " + result);
+            updateHistory();
+
+            currentInput = result;
+        } catch {
+            display.value = "Error";
+            currentInput = "";
+        }
+    }
+
+    function updateHistory() {
+        const list = document.getElementById("historyList");
+        list.innerHTML = "";
+        for (let i = history.length - 1; i >= 0; i--) {
+            const li = document.createElement("li");
+            li.innerText = history[i];
+            list.appendChild(li);
+        }
+    }
+
+    function clearDisplay() {
+        currentInput = "";
+        display.value = "";
+    }
+
+    function backspace() {
+        currentInput = currentInput.slice(0, -1);
+        display.value = currentInput;
+    }
+
+    function squareRoot() {
+        try {
+            let result = Math.sqrt(Function('"use strict";return (' + currentInput + ')')());
+            display.value = result;
+
+            // Add to history
+            history.push("√(" + currentInput + ") = " + result);
+            updateHistory();
+
+            currentInput = result;
+        } catch {
+            display.value = "Error";
+            currentInput = "";
+        }
+    }
+
+    document.addEventListener("keydown", function(event) {
+        const key = event.key;
+        if (!isNaN(key) || key === ".") appendNumber(key);
+        if (["+", "-", "*", "/"].includes(key)) appendOperator(key);
+        if (key === "Enter") calculate();
+        if (key === "Backspace") backspace();
+    });
+
+    // --- Math Game ---
+    let num1, num2, correctAnswer;
+    let questionCount = 0;
+    let score = 0;
+    let totalQuestions = 0;
+
+    function startGame() {
+        score = 0;
+        questionCount = 0;
+        totalQuestions = parseInt(document.getElementById("totalQuestions").value);
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionCount >= totalQuestions) {
+            document.getElementById("question").innerText = "Game Finished!";
+            document.getElementById("score").innerText = "Score: " + score + " / " + totalQuestions;
+            return;
+        }
+
+        const operationSelect = document.getElementById("operation").value;
+        const ops = ["+", "-", "*", "/"];
+        let op = operationSelect === "all" ? ops[Math.floor(Math.random() * 4)] : operationSelect;
+
+        num1 = Math.floor(Math.random() * 20) + 1;
+        num2 = Math.floor(Math.random() * 20) + 1;
+        if (op === "/" && num2 === 0) num2 = 1;
+
+        document.getElementById("question").innerText = `${num1} ${op} ${num2} = ?`;
+        correctAnswer = Function('"use strict";return (' + num1 + op + num2 + ')')();
+        questionCount++;
+    }
+
+    function submitAnswer() {
+        const userAnswer = parseFloat(document.getElementById("answer").value);
+        if (userAnswer === correctAnswer) score++;
+        document.getElementById("answer").value = "";
+        nextQuestion();
+    }
+</script>
+</body>
+</html>
