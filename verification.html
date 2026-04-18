@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verify Account</title>
+</head>
+<body>
+
+<h2>Verification System ✅</h2>
+<a href="index.html">Home</a>
+
+<p>Verification Fee: R20</p>
+
+<input id="name" placeholder="Username">
+<input id="proof" placeholder="Payment proof link">
+
+<button onclick="send()">Request Verification</button>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBV6Oq0lK6vbHzWAbaHRQDy3XgQ1K99OPM",
+  authDomain: "educhat-c05b4.firebaseapp.com",
+  databaseURL: "https://educhat-c05b4-default-rtdb.firebaseio.com",
+  projectId: "educhat-c05b4"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+function send(){
+  db.ref("verifyRequests").push({
+    name: name.value,
+    proof: proof.value,
+    status: "pending"
+  });
+
+  alert("Request sent!");
+}
+</script>
+
+</body>
+</html>
