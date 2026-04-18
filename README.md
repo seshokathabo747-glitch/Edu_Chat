@@ -1,47 +1,14 @@
-🔍 Thabo Search Engine
+EduChat is a real-time student messaging web application built using HTML, CSS, JavaScript, and Firebase Realtime Database.
 
-A modern, lightweight web-based search engine built using HTML, CSS, and JavaScript. This project provides a clean user interface and allows users to search the internet directly داخل the app.
+It allows learners to communicate through group chats and private chats instantly across devices using a web link hosted on GitHub Pages.
 
-🚀 Features
+Features:
+- Real-time group chat for all users
+- Private one-on-one messaging system
+- Username system saved locally
+- Verification request system (R20 proof-based approval)
+- Simple settings page for user setup
 
-- 🔎 Real-time internet search (powered via Bing)
-- ⌨️ Press Enter to search
-- 🌙 Dark / Light mode toggle
-- ⏳ Loading indicator for better UX
-- 📱 Responsive design (works on mobile & desktop)
-- 🎨 Clean and modern UI
+EduChat is designed to help students connect, share ideas, and collaborate online in a fast and simple way without needing to install an app.
 
-💻 Technologies Used
-
-- HTML5
-- CSS3
-- JavaScript (Vanilla)
-
-📸 How It Works
-
-Users enter a search query into the input field, and results are displayed inside the app using an embedded search frame.
-
-⚠️ Note
-
-Some websites may block loading inside the app due to security policies (iframe restrictions).
-
-📦 Installation
-
-1. Download or clone this repository
-2. Open "index.html" in your browser
-3. Start searching 🔍
-
-🌟 Future Improvements
-
-- 🤖 AI-powered answers
-- 🔎 Search suggestions (autocomplete)
-- 🖼️ Image and video search
-- 🌐 Custom search API integration
-
-👨‍💻 Author
-
-Created by Thabo
-
----
-
-⭐ If you like this project, consider giving it a star!
+This project is hosted for free using GitHub Pages and powered by Firebase for backend data storage.
