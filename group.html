@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Group Chat</title>
+  <style>
+    body { font-family: Arial; padding: 10px; }
+    #chat { height: 70vh; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+    input, button { width: 100%; padding: 10px; margin-top: 5px; }
+    .msg { background:#eee; padding:8px; margin:5px; border-radius:6px; }
+  </style>
+</head>
+<body>
+
+<h2>Group Chat 💬</h2>
+<a href="index.html">Home</a>
+
+<p id="userInfo"></p>
+
+<input id="msg" placeholder="Type message">
+<button onclick="send()">Send</button>
+
+<div id="chat"></div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBV6Oq0lK6vbHzWAbaHRQDy3XgQ1K99OPM",
+  authDomain: "educhat-c05b4.firebaseapp.com",
+  databaseURL: "https://educhat-c05b4-default-rtdb.firebaseio.com",
+  projectId: "educhat-c05b4"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const chat = document.getElementById("chat");
+
+// GET SAVED USERNAME
+let name = localStorage.getItem("edu_user");
+
+if(!name){
+  name = "Anonymous";
+}
+
+document.getElementById("userInfo").innerText =
+  "Logged in as: " + name;
+
+// SEND MESSAGE
+function send(){
+  const msg = document.getElementById("msg").value;
+
+  if(!msg) return;
+
+  db.ref("groupChat").push({
+    name: name,
+    text: msg,
+    time: new Date().toLocaleTimeString()
+  });
+
+  document.getElementById("msg").value = "";
+}
+
+// DISPLAY MESSAGES
+db.ref("groupChat").on("child_added", function(s){
+  const m = s.val();
+
+  const div = document.createElement("div");
+  div.className = "msg";
+
+  div.innerHTML =
+    `<b>${m.name}</b>: ${m.text}<br><small>${m.time}</small>`;
+
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+});
+</script>
+
+</body>
+</html>
