@@ -1,0 +1,123 @@
+import { db } from "./firebase.js";
+
+import {
+    ref,
+    push,
+    set,
+    onChildAdded
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const messages = document.getElementById("messages");
+const messageInput = document.getElementById("message");
+const sendBtn = document.getElementById("sendBtn");
+const myName = document.getElementById("myName");
+
+// Ask for username once
+let username = localStorage.getItem("username");
+
+if (!username) {
+
+    username = prompt("Enter your username:");
+
+    if (!username || username.trim() === "") {
+
+        username = "Guest";
+
+    }
+
+    localStorage.setItem("username", username);
+
+}
+
+myName.textContent = username;
+
+// Verified users
+const verifiedUsers = [
+    "Admin",
+    "Owner",
+    "Elsi"
+];
+
+// Send message
+sendBtn.addEventListener("click", sendMessage);
+
+messageInput.addEventListener("keypress", function(e){
+
+    if(e.key === "Enter"){
+
+        sendMessage();
+
+    }
+
+});
+
+function sendMessage(){
+
+    const text = messageInput.value.trim();
+
+    if(text === "") return;
+
+    const messageRef = push(ref(db,"messages"));
+
+    set(messageRef,{
+
+        username: username,
+
+        verified: verifiedUsers.includes(username),
+
+        text: text,
+
+        time: Date.now()
+
+    });
+
+    messageInput.value="";
+
+}
+
+// Receive messages instantly
+onChildAdded(ref(db,"messages"),function(snapshot){
+
+    const msg = snapshot.val();
+
+    const div = document.createElement("div");
+
+    div.className = "message";
+
+    const badge = msg.verified
+        ? '<span class="verified">✔️</span>'
+        : "";
+
+    div.innerHTML = `
+
+        <div class="name">
+
+            ${msg.username} ${badge}
+
+        </div>
+
+        <div class="text">
+
+            ${msg.text}
+
+        </div>
+
+        <div class="time">
+
+            ${new Date(msg.time).toLocaleTimeString([],{
+
+                hour:"2-digit",
+
+                minute:"2-digit"
+
+            })}
+
+        </div>
+
+    `;
+
+    messages.appendChild(div);
+
+    messages.scrollTop = messages.scrollHeight;
+
+});

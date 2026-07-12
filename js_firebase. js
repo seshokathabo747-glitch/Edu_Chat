@@ -1,0 +1,20 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import { getDatabase } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCLGP9cio98DfufzNYYCsjfmxQ1kRFwl50",
+    authDomain: "mac-chat-71d58.firebaseapp.com",
+    databaseURL: "https://mac-chat-71d58-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "mac-chat-71d58",
+    storageBucket: "mac-chat-71d58.firebasestorage.app",
+    messagingSenderId: "652399668525",
+    appId: "1:652399668525:web:d1a30d998c805a7fe4b7a4",
+    measurementId: "G-H0CTEFTBV5"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+export { db };
